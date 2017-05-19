@@ -3,7 +3,6 @@
 #include <iostream>
 #include <chrono>
 #include <ctime>
-using namespace std;
 
 int main(int argc, char * argv[]) {
 	int n = atoi(argv[1]);
@@ -20,7 +19,7 @@ int main(int argc, char * argv[]) {
 	for(int k = 1; k < 100; ++k) {
 		//Initialisierung
 		for(int i = 0; i < n; ++i) {
-			srand(k * (i+1));
+			srand (k * (i+1));
 			for(int j = 0; j < n; ++j) {
 				a[i][j] = rand() % 10;
 			}
@@ -32,23 +31,29 @@ int main(int argc, char * argv[]) {
 				if(a[i][j] == 1) {
 					if(j+3 < n && a[i][j+1] == 2 && a[i][j+2] == 3 && a[i][j+3] == 4) {
 						count++;
-//						cout << "k=" << k << ", horizontal ab a[" <<  i << ", " << j << "]\n";
+//						std::cout << "k=" << k << ", horizontal ab a[" <<  i << ", " << j << "]\n";
 //						for(int i = 0; i < n; ++i) {
 //							for(int j = 0; j < n; ++j) {
-//								cout << " " << a[i][j];
+//								if(a[i][j] == 1 || a[i][j] == 2 || a[i][j] == 3 || a[i][j] == 4)
+//									std::cout << " " << a[i][j];
+//								else
+//									std::cout << " x";
 //							}
-//							cout << "\n";
+//							std::cout << "\n";
 //						}
 
 					}
 					if(i+3 < n && a[i+1][j] == 2 && a[i+2][j] == 3 && a[i+3][j] == 4) {
 						count++;
-//						cout << "k=" << k << ", vertikal ab a[" <<  i << ", " << j << "]\n";
+//						std::cout << "k=" << k << ", vertikal ab a[" <<  i << ", " << j << "]\n";
 //						for(int i = 0; i < n; ++i) {
 //							for(int j = 0; j < n; ++j) {
-//								cout << " " << a[i][j];
+//								if(a[i][j] == 1 || a[i][j] == 2 || a[i][j] == 3 || a[i][j] == 4)
+//									std::cout << " " << a[i][j];
+//								else
+//									std::cout << " x";
 //							}
-//							cout << "\n";
+//							std::cout << "\n";
 //						}
 					}
 				}
@@ -60,6 +65,6 @@ int main(int argc, char * argv[]) {
 //	chrono::duration<double> elapsed_seconds = end-start;
 //	cout << "elapsed time: " << elapsed_seconds.count() << "s\n";
 
-	cout << "Anzahl Vorkommen: " << count;
+	std::cout << "Anzahl Vorkommen: " << count << "\n";
 	return 0;
 }
