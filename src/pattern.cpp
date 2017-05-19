@@ -1,18 +1,10 @@
 #include <omp.h>
 #include <stdlib.h>
 #include <iostream>
-#include <chrono>
-#include <ctime>
 
 int main(int argc, char * argv[]) {
 	int n = atoi(argv[1]);
 	int threads = atoi(argv[2]);
-
-	n = 20;
-	threads = 1;
-
-//	chrono::time_point<chrono::system_clock> start, end;
-//	start = chrono::system_clock::now();
 
 	int count = 0;
 	short a[n][n];
@@ -60,10 +52,6 @@ int main(int argc, char * argv[]) {
 			}
 		}
 	}
-
-//	end = chrono::system_clock::now();
-//	chrono::duration<double> elapsed_seconds = end-start;
-//	cout << "elapsed time: " << elapsed_seconds.count() << "s\n";
 
 	std::cout << "Anzahl Vorkommen: " << count << "\n";
 	return 0;
