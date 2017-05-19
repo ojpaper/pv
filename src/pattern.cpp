@@ -9,21 +9,19 @@ int main(int argc, char * argv[]) {
 	int n = atoi(argv[1]);
 	int threads = atoi(argv[2]);
 
-	//TODO: fix stackoverflow for higher values for n
-	n = 1000;
+	n = 20;
 	threads = 1;
 
-	chrono::time_point<chrono::system_clock> start, end;
-	start = chrono::system_clock::now();
+//	chrono::time_point<chrono::system_clock> start, end;
+//	start = chrono::system_clock::now();
 
 	int count = 0;
 	short a[n][n];
 	for(int k = 1; k < 100; ++k) {
 		//Initialisierung
 		for(int i = 0; i < n; ++i) {
-			srand(k * (i + 1));
+			srand(k * (i+1));
 			for(int j = 0; j < n; ++j) {
-
 				a[i][j] = rand() % 10;
 			}
 		}
@@ -58,9 +56,9 @@ int main(int argc, char * argv[]) {
 		}
 	}
 
-	end = chrono::system_clock::now();
-	chrono::duration<double> elapsed_seconds = end-start;
-	cout << "elapsed time: " << elapsed_seconds.count() << "s\n";
+//	end = chrono::system_clock::now();
+//	chrono::duration<double> elapsed_seconds = end-start;
+//	cout << "elapsed time: " << elapsed_seconds.count() << "s\n";
 
 	cout << "Anzahl Vorkommen: " << count;
 	return 0;
