@@ -2,10 +2,12 @@
 #include <stdlib.h>
 #include <iostream>
 
+using namespace std;
+
 int main(int argc, char * argv[]) {
 	int n = atoi(argv[1]);
 	int threads = atoi(argv[2]);
-
+	cout << "n: " << n << " threads" << threads << endl;
 	int count = 0;
 	short a[n][n];
 	for(int k = 1; k < 100; ++k) {
@@ -53,6 +55,6 @@ int main(int argc, char * argv[]) {
 		}
 	}
 
-	std::cout << "Anzahl Vorkommen: " << count << "\n";
+	cout << "Anzahl Vorkommen: " << count << "\n";
 	return 0;
 }
