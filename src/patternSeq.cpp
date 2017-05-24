@@ -1,15 +1,19 @@
 #include <omp.h>
 #include <stdlib.h>
 #include <iostream>
+#include <ctime>
 
 using namespace std;
 
 int main(int argc, char * argv[]) {
 	int n = atoi(argv[1]);
 	int threads = atoi(argv[2]);
-	cout << "n: " << n << " threads" << threads << endl;
+	cout << "n: " << n << " threads " << threads << endl;
 	int count = 0;
 	short a[n][n];
+
+	clock_t begin = clock();
+
 	for(int k = 1; k < 100; ++k) {
 		//Initialisierung
 		for(int i = 0; i < n; ++i) {
@@ -56,5 +60,10 @@ int main(int argc, char * argv[]) {
 	}
 
 	cout << "Anzahl Vorkommen: " << count << "\n";
+
+	clock_t end = clock();
+	double elapsed_secs = double(end - begin) / CLOCKS_PER_SEC;
+	cout << "time: " << elapsed_secs << endl;
+
 	return 0;
 }
