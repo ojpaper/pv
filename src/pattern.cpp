@@ -6,6 +6,7 @@
 using namespace std;
 
 int main(int argc, char * argv[]) {
+	omp_set_nested(1);
 	int n = atoi(argv[1]);
 	int threads = atoi(argv[2]);
 	cout << "n: " << n << " threads " << threads << endl;
