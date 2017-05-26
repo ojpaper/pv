@@ -12,7 +12,7 @@ int main(int argc, char * argv[]) {
 	cout << "n: " << n << " threads " << threads << endl;
 	int count = 0;
 	short a[n][n];
-
+	int acount = 0;
 	clock_t begin = clock();
 
 
@@ -23,7 +23,13 @@ int main(int argc, char * argv[]) {
 			srand (k * (i+1));
 			for(int j = 0; j < n; ++j) {
 				a[i][j] = rand() % 10;
+				acount++;
+
 			}
+			for(int j = 0; j < n; ++j) {
+				cout << a[i][j];
+			}
+			cout << endl;
 		}
 
 		//Pattern-Suche
@@ -40,6 +46,8 @@ int main(int argc, char * argv[]) {
 				}
 			}
 		}
+		cout << "Ende suche " << k << ",found " << count << " 1234's" << endl;
+		cout << "\n\n\n\n";
 	}
 
 	clock_t end = clock();
