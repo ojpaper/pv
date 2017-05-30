@@ -10,28 +10,20 @@ int main(int argc, char * argv[]) {
 	int n = atoi(argv[1]);
 	int threads = atoi(argv[2]);
 	cout << "n: " << n << " threads " << threads << endl;
-	int count = 0;
+	double count = 0;
 	short a[n][n];
-	int acount = 0;
-	clock_t begin = clock();
-
+	//TODO: create place. try stuff to make initialization parallel
 
 	//not this loop
 	for(int k = 1; k < 100; ++k) {
 		//Initialisierung
+		//TODO: make this parallel
 		for(int i = 0; i < n; ++i) {
-			srand (k * (i+1));
+			srand(k * (i+1));
 			for(int j = 0; j < n; ++j) {
 				a[i][j] = rand() % 10;
-				acount++;
-
 			}
-			for(int j = 0; j < n; ++j) {
-				cout << a[i][j];
-			}
-			cout << endl;
 		}
-
 		//Pattern-Suche
 		#pragma omp parallel for collapse(2) num_threads(threads) schedule(static) reduction(+:count)
 		for(int i = 0; i < n; ++i) {
@@ -46,13 +38,7 @@ int main(int argc, char * argv[]) {
 				}
 			}
 		}
-		cout << "Ende suche " << k << ",found " << count << " 1234's" << endl;
-		cout << "\n\n\n\n";
 	}
-
-	clock_t end = clock();
-	double elapsed_secs = double(end - begin) / CLOCKS_PER_SEC;
-	cout << "time: " << elapsed_secs << endl;
 
 	cout << "Anzahl Vorkommen: " << count << "\n";
 
