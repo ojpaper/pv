@@ -24,7 +24,7 @@ int main(int argc, char * argv[]) {
 			}
 		}
 		//Pattern-Suche
-		#pragma omp parallel for collapse(2) num_threads(threads) schedule(static) reduction(+:count) proc_bind(close)
+		#pragma omp parallel for num_threads(threads) schedule(static) reduction(+:count) proc_bind(close)
 		for(int i = 0; i < n; ++i) {
 			for(int j = 0; j < n; ++j) {
 				if(a[i][j] == 1) {

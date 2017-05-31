@@ -11,7 +11,7 @@ int main(int argc, char * argv[]) {
 	clock_t begin = clock();
 
 	long b[n];
-	long sumB;
+	long sumB = 0;
 	int a[n][3];
 
 	b[0] = 0;
