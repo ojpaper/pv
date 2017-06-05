@@ -32,7 +32,7 @@ int main(int argc, char * argv[]) {
 
 	double begin = omp_get_wtime();
 
-	srand(4444);
+	srand(4321);
 	for(int i = 0; i < n; ++i) {
 		a.push_back(rand() % 100 + 1);
 		//		cout << a[i] << endl;
@@ -45,38 +45,44 @@ int main(int argc, char * argv[]) {
 	cout << s << endl;
 
 	for(int anzahl = 2; anzahl <= n/2; anzahl++) {
-		long ug = s/anzahl;
-		long og = s;
+		int mitte = 0;
+		long links = s/anzahl;
+		long rechts = s;
+		long segmentCount;
 		long smallest = s;
-		while(ug != og) {
-			long biggest = 0;
-			int segmente = anzahl;
-			long help = 0;
-			long mid = ((ug+og)/2) + 1;
-			for(int i = 0; i<n; i++) {
-				if(help+a.at(i) <= mid) {
-					help += a.at(i);
-					if(help > biggest) {
-						biggest = help;
+		long biggest;
+		long segment;
+
+		/* Solange die zu durchsuchende Menge nicht leer ist */
+		while (links <= rechts)
+		{
+			mitte = links + ((rechts - links) / 2); /* Bereich halbieren */
+			segment = 0;
+			biggest = 0;
+			segmentCount = anzahl-1;
+			for(int i = 0; i < n; i++) {
+				if(segment+a.at(i) <= mitte) {
+					segment += a.at(i);
+				} else if(segmentCount > 0) {
+					if(segment > biggest) {
+						biggest = segment;
 					}
-				} else if (segmente > 0) {
-					segmente--;
-					help = a.at(i);
-				} else if(segmente == 0) {
-					og = mid;
-					break;
+					segment = a.at(i);
+					segmentCount--;
+				} else {
+					segment += a.at(i);
 				}
 			}
-			if(help > biggest) {
-				biggest = help;
+			if(segment > biggest) {
+				biggest = segment;
 			}
 			if(biggest < smallest) {
 				smallest = biggest;
 			}
-			if(segmente == 0) {
-				og = mid;
-			}else if(segmente != 0) {
-				ug = mid;
+			if(biggest > mitte) {
+				links = mitte + 1;
+			} else {
+				rechts = mitte - 1;
 			}
 		}
 		m.push_back(smallest);
@@ -86,13 +92,12 @@ int main(int argc, char * argv[]) {
 	 *
 	 */
 
-	cout << "M(m=2) = " << m.at(2-1) << endl;
-	cout << "M(m=3) = "  << m.at(3-1) << endl;
-	cout << "M(m=5) = "  << m.at(5-1) << endl;
+	cout << "M(m=2) = " << m.at(1) << endl;
+	cout << "M(m=3) = "  << m.at(2) << endl;
+	cout << "M(m=5) = "  << m.at(4) << endl;
 	cout << "M(m=" << n/4 << ")= "  << m.at(n/4-1) << endl;
 	cout << "M(m=" << n/2-1 << ") = "  << m.at((n/2)-2) << endl;
 	cout << "M(m=" << n/2 << ") = "  << m.at(n/2-1) << endl;
-
 
 	double end = omp_get_wtime();
 	cout << "time: " << end-begin << endl;
