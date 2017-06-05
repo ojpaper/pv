@@ -14,10 +14,10 @@ int main(int argc, char * argv[]) {
 
 	long b[n];
 	long sumB;
-	bool counter[n];
 	vector<vector<int>> order;
-	int ordered[n];
 	int done;
+	int ordered[n];
+	bool counter[n];
 
 	#pragma omp parallel sections
 	{
