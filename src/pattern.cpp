@@ -12,7 +12,7 @@ int main(int argc, char * argv[]) {
 	cout << "n: " << n << " threads " << threads << endl;
 	int count = 0;
 	short a[n][n];
-
+	short b[n][n]; // transponiertes a
 	//not this loop
 	for(int k = 1; k < 100; ++k) {
 		//Initialisierung
@@ -23,6 +23,23 @@ int main(int argc, char * argv[]) {
 				a[i][j] = rand() % 10;
 			}
 		}
+
+		// transponiere
+		// TODO: make this parallel
+		for(int i = 0; i < n; ++i){
+			for(int j = 0; j < n; j++){
+				b[i][j] = a[j][i];
+			}
+		}
+
+
+		for(int i = 0; i < n; ++i){
+			for(int j = 0; j < n; j++){
+				cout << "a: " << a[i][j] << "    b: " << b[i][j] << endl;
+			}
+		}
+
+
 		//Pattern-Suche
 		#pragma omp parallel for num_threads(threads) schedule(static) reduction(+:count) proc_bind(close)
 		for(int i = 0; i < n; ++i) {
