@@ -36,7 +36,7 @@ int main(int argc, char * argv[]) {
 
 	srand(4321);
 	for(int i = 0; i < n; ++i) {
-		a[i](rand() % 100 + 1);
+		a[i] = (rand() % 100 + 1);
 		summe += a[i];
 		//		cout << a[i] << endl;
 	}
