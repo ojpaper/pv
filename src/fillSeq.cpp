@@ -1,14 +1,11 @@
 #include <omp.h>
 #include <iostream>
 #include <stdlib.h>
-#include <ctime>
 using namespace std;
 
 int main(int argc, char * argv[]) {
 	int n = atoi(argv[1]);
 	int threads = atoi(argv[2]);
-
-	clock_t begin = clock();
 
 	long b[n];
 	long sumB = 0;
@@ -34,10 +31,5 @@ int main(int argc, char * argv[]) {
 		cout << "b[" << i << "] = " << b[i]<< "\n";
 	}
 	cout << "sum = " << sumB << endl;
-
-	clock_t end = clock();
-	double elapsed_secs = double(end - begin) / CLOCKS_PER_SEC;
-	cout << "time: " << elapsed_secs;
-
 	return 0;
 }
