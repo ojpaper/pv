@@ -60,7 +60,11 @@ int main(int argc, char * argv[]) {
 			if(biggest < smallest) {
 				smallest = biggest;
 			}
-			(biggest > mitte) ? links = mitte+1 : rechts = mitte-1;
+			if(biggest > mitte) {
+				links = mitte+1;
+			} else {
+				rechts = mitte-1;
+			}
 		}
 		#pragma omp ordered
 		{
