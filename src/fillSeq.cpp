@@ -5,7 +5,6 @@ using namespace std;
 
 int main(int argc, char * argv[]) {
 	int n = atoi(argv[1]);
-	int threads = atoi(argv[2]);
 
 	long b[n];
 	long sumB = 0;

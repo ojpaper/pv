@@ -14,7 +14,8 @@ int main(int argc, char * argv[]) {
 
 	long b[n];
 	long sumB;
-	vector<vector<int>> order;
+	int order[n][n];
+	int orderCount[n];
 	int done;
 	int ordered[n];
 	bool counter[n];
@@ -45,8 +46,7 @@ int main(int argc, char * argv[]) {
 		#pragma omp section
 		{
 			for(int i = 0; i < n; ++i) {
-				vector<int> help;
-				order.push_back(help);
+				orderCount[i] = 0;
 			}
 		}
 	}
@@ -59,15 +59,16 @@ int main(int argc, char * argv[]) {
 		a[i][0] = rand() % i;
 		a[i][1] = (rand() % 19) - 9;
 		a[i][2] = (rand() % 3) + 1;
-		order.at(a[i][0]).push_back(i);
+		order[a[i][0]][orderCount[a[i][0]]] = i;
+		orderCount[a[i][0]]++;
 	}
 
 	sumB = 0;
 	done = 0;
 	for(int i = 1; i < n;) {
 		//Erstellung einer baumartigen Abarbeitungsliste
-		for(vector<int>::iterator it=order.at(done).begin(); it != order.at(done).end(); it++) {
-			ordered[i] = *it;
+		for(int j = 0; j < orderCount[done]; j++) {
+			ordered[i] = order[done][j];
 			i++;
 		}
 		done++;
