@@ -21,8 +21,9 @@ int main(int argc, char * argv[]) {
 	long m[n/2-1];
 	int counter = 0;
 	m[0] = summe;
+	long sumM = 0;
 
-	#pragma omp parallel for ordered schedule(dynamic) num_threads(threads)
+	#pragma omp parallel for ordered schedule(dynamic) num_threads(threads) reduction(+:sumM)
 	for(int anzahl = 2; anzahl <= n/2; anzahl++) {
 		int mitte = 0;
 		long links = summe/anzahl;
@@ -71,6 +72,7 @@ int main(int argc, char * argv[]) {
 			m[anzahl-1] = smallest;
 			counter++;
 		}
+		sumM += smallest;
 	}
 
 	//2, 3, 5, n/4, n/2 - 1, n/2
@@ -80,5 +82,5 @@ int main(int argc, char * argv[]) {
 	cout << "M(m=" << n/4 << ")= "  << m[n/4-1] << endl;
 	cout << "M(m=" << n/2-1 << ") = "  << m[((n/2)-2)] << endl;
 	cout << "M(m=" << n/2 << ") = "  << m[(n/2-1)] << endl;
-	cout << "Summe: " << summe << endl;
+	cout << "Summe: " << sumM << endl;
 }

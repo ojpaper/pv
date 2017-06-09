@@ -4,23 +4,25 @@
 
 using namespace std;
 int main(int argc, char * argv[]) {
-	omp_set_nested(1);
-	omp_set_max_active_levels(2);
 	int n = atoi(argv[1]);
 	int threads = atoi(argv[2]);
 	cout << "n: " << n << " threads " << threads << endl;
-	short a[n][n];
+	int a[n][n];
 	int count = 0;
+
 	//not this loop
 	for(int k = 1; k < 100; ++k) {
 		//Initialisierung
+		#pragma omp parallel for num_threads(threads) schedule(static)
 		for(int i = 0; i < n; ++i) {
-			srand(k * (i+1));
-			for(int j = 0; j < n; ++j) {
-				a[i][j] = rand() % 10;
+			#pragma omp critical
+			{
+				srand(k * (i+1));
+				for(int j = 0; j < n; ++j) {
+					a[i][j] = rand() % 10;
+				}
 			}
 		}
-
 		//Pattern-Suche
 		#pragma omp parallel for num_threads(threads) schedule(static) reduction(+:count)
 		for(int i = 0; i < n; ++i) {
