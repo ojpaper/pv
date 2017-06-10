@@ -69,8 +69,10 @@ int main(int argc, char * argv[]) {
 		}
 		#pragma omp ordered
 		{
+		#pragma omp atomic write
 			m[anzahl-1] = smallest;
-			counter++;
+		#pragma omp atomic write
+			counter = counter + 1;
 		}
 		sumM += smallest;
 	}
