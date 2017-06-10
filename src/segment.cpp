@@ -11,7 +11,6 @@ int main(int argc, char * argv[]) {
 	omp_set_num_threads(threads);
 	int a[n];
 	long summe = 0;
-
 	srand(4321);
 	for(int i = 0; i < n; ++i) {
 		a[i] = (rand() % 100 + 1);
@@ -26,18 +25,17 @@ int main(int argc, char * argv[]) {
 	#pragma omp parallel for ordered schedule(dynamic) num_threads(threads) reduction(+:sumM)
 	for(int anzahl = 2; anzahl <= n/2; anzahl++) {
 		int mitte = 0;
-		long links = summe/anzahl;
+		long links = m[0]/anzahl;
 		int help;
 		#pragma omp atomic read
 		help = counter;
 		long rechts = m[help];
 		long segmentCount;
-		long smallest = summe;
+		long smallest = m[help];
 		long biggest;
 		long segment;
 
-		while (links <= rechts)
-		{
+		while (links <= rechts) {
 			mitte = links + ((rechts - links) / 2); /* Bereich halbieren */
 			segment = 0;
 			biggest = 0;
@@ -69,20 +67,20 @@ int main(int argc, char * argv[]) {
 		}
 		#pragma omp ordered
 		{
-		#pragma omp atomic write
+			#pragma omp atomic write
 			m[anzahl-1] = smallest;
-		#pragma omp atomic write
+			#pragma omp atomic write
 			counter = counter + 1;
 		}
 		sumM += smallest;
 	}
 
 	//2, 3, 5, n/4, n/2 - 1, n/2
-	cout << "M(m=2) = " << m[1] << endl;
-	cout << "M(m=3) = "  << m[2] << endl;
-	cout << "M(m=5) = "  << m[4] << endl;
-	cout << "M(m=" << n/4 << ")= "  << m[n/4-1] << endl;
-	cout << "M(m=" << n/2-1 << ") = "  << m[((n/2)-2)] << endl;
-	cout << "M(m=" << n/2 << ") = "  << m[(n/2-1)] << endl;
-	cout << "Summe: " << sumM << endl;
+	cout << "M[2]=" << m[1] << endl;
+	cout << "M[3]="  << m[2] << endl;
+	cout << "M[5]="  << m[4] << endl;
+	cout << "M[" << n/4 << "]="  << m[n/4-1] << endl;
+	cout << "M[" << n/2-1 << "]="  << m[((n/2)-2)] << endl;
+	cout << "M[" << n/2 << "]="  << m[(n/2-1)] << endl;
+	cout << "sum=" << sumM << endl;
 }
