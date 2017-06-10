@@ -9,6 +9,7 @@ int main(int argc, char * argv[]) {
 	cout << "n: " << n << " threads " << threads << endl;
 	int a[n][n];
 	int count = 0;
+	double start, end, sum = 0;
 
 	//not this loop
 	for(int k = 1; k < 100; ++k) {
@@ -23,6 +24,8 @@ int main(int argc, char * argv[]) {
 				}
 			}
 		}
+		start = omp_get_wtime();
+
 		//Pattern-Suche
 		#pragma omp parallel for num_threads(threads) schedule(static) reduction(+:count)
 		for(int i = 0; i < n; ++i) {
@@ -38,8 +41,11 @@ int main(int argc, char * argv[]) {
 				}
 			}
 		}
+		end = omp_get_wtime();
+		sum += end - start;
 	}
 
 	cout << "Anzahl Vorkommen: " << count << "\n";
+	cout << "Zeit: " << sum << endl;
 	return 0;
 }
