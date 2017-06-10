@@ -8,9 +8,8 @@ int main(int argc, char * argv[]) {
 	omp_set_nested(1);
 	omp_set_max_active_levels(2);
 	int n = atoi(argv[1]);
-	int threads = atoi(argv[2]);
+	int threads = atoi(argv[2]) + 1;
 	omp_set_num_threads(threads);
-	cout << "n: " << n << " threads " << threads << endl;
 
 	long b[n];
 	long sumB;

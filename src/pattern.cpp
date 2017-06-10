@@ -6,7 +6,6 @@ using namespace std;
 int main(int argc, char * argv[]) {
 	int n = atoi(argv[1]);
 	int threads = atoi(argv[2]);
-	cout << "n: " << n << " threads " << threads << endl;
 	int a[n][n];
 	int count = 0;
 	double start, end, sum = 0;
@@ -24,6 +23,7 @@ int main(int argc, char * argv[]) {
 				}
 			}
 		}
+		// messungen für patternsuche
 		start = omp_get_wtime();
 
 		//Pattern-Suche
@@ -41,6 +41,7 @@ int main(int argc, char * argv[]) {
 				}
 			}
 		}
+		// ende der messung für pattern-suche
 		end = omp_get_wtime();
 		sum += end - start;
 	}
