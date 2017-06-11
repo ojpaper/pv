@@ -4,6 +4,7 @@
 using namespace std;
 
 int main(int argc, char * argv[]) {
+	// init parallel
 	omp_set_nested(1);
 	omp_set_max_active_levels(2);
 	int n = atoi(argv[1]);
@@ -12,6 +13,7 @@ int main(int argc, char * argv[]) {
 	int a[n];
 	long summe = 0;
 
+	//init a, summe
 	srand(4321);
 	for(int i = 0; i < n; ++i) {
 		a[i] = (rand() % 100 + 1);
@@ -23,6 +25,8 @@ int main(int argc, char * argv[]) {
 	m[0] = summe;
 	long sumM = 0;
 
+
+	//main parallel part
 	#pragma omp parallel for ordered schedule(dynamic) num_threads(threads) reduction(+:sumM)
 	for(int anzahl = 2; anzahl <= n/2; anzahl++) {
 		int mitte = 0;
@@ -38,11 +42,13 @@ int main(int argc, char * argv[]) {
 
 		while (links <= rechts)
 		{
-			mitte = links + ((rechts - links) / 2); /* Bereich halbieren */
+			// halve area for each cycle as long as the maxima dont hit each other
+			mitte = links + ((rechts - links) / 2);
 			segment = 0;
 			biggest = 0;
 			segmentCount = anzahl-1;
 			for(int i = 0; i < n; i++) {
+				// if the current segment is to big search the next segment
 				if(segment + a[i] <= mitte) {
 					segment += a[i];
 				} else if(segmentCount > 0) {
@@ -67,6 +73,7 @@ int main(int argc, char * argv[]) {
 				rechts = mitte-1;
 			}
 		}
+		// add smallest for the current part and increase counter
 		#pragma omp ordered
 		{
 		#pragma omp atomic write
