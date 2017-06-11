@@ -33,7 +33,7 @@ int main(int argc, char * argv[]) {
 		}
 	}
 
-	//sequentiell
+	//sequentiell init a
 	int a[n][3];
 	srand(123);
 	a[0][0] = a[0][1] = a[0][2] = 0;
