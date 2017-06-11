@@ -4,13 +4,13 @@
 using namespace std;
 
 int main(int argc, char * argv[]) {
-	omp_set_nested(1);
-	omp_set_max_active_levels(2);
 	int n = atoi(argv[1]);
 	int threads = atoi(argv[2]);
 	omp_set_num_threads(threads);
+
 	int a[n];
 	long summe = 0;
+
 	srand(4321);
 	for(int i = 0; i < n; ++i) {
 		a[i] = (rand() % 100 + 1);
@@ -24,14 +24,14 @@ int main(int argc, char * argv[]) {
 
 	#pragma omp parallel for ordered schedule(dynamic) num_threads(threads) reduction(+:sumM)
 	for(int anzahl = 2; anzahl <= n/2; anzahl++) {
-		int mitte = 0;
+		long mitte = 0;
 		long links = m[0]/anzahl;
 		int help;
 		#pragma omp atomic read
 		help = counter;
 		long rechts = m[help];
-		long segmentCount;
 		long smallest = m[help];
+		long segmentCount;
 		long biggest;
 		long segment;
 

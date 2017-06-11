@@ -1,46 +1,29 @@
 #include <omp.h>
 #include <iostream>
-#include <vector>
 #include <stdlib.h>
 using namespace std;
 
 int main(int argc, char * argv[]) {
-	omp_set_nested(1);
-	omp_set_max_active_levels(2);
 	int n = atoi(argv[1]);
 	int threads = atoi(argv[2]) + 1;
 	omp_set_num_threads(threads);
 
 	long b[n];
+	bool counter[n];
 	long sumB;
 	int order[n][n];
 	int orderCount[n];
 	int done;
 	int ordered[n];
-	bool counter[n];
 
 	#pragma omp parallel sections
 	{
-		#pragma omp section
-		{
-			for(int i = 0; i < n; ++i) {
-				b[i] = 0;
-			}
-		}
 		#pragma omp section
 		{
 			counter[0] = 1;
 			for(int i = 1; i < n; ++i) {
 				counter[i] = 0;
 			}
-
-		}
-		#pragma omp section
-		{
-			for(int i = 0; i < n; ++i) {
-				ordered[i] = 0;
-			}
-
 		}
 		#pragma omp section
 		{
@@ -50,7 +33,7 @@ int main(int argc, char * argv[]) {
 		}
 	}
 
-	//sequentiell!
+	//sequentiell
 	int a[n][3];
 	srand(123);
 	a[0][0] = a[0][1] = a[0][2] = 0;
@@ -65,7 +48,7 @@ int main(int argc, char * argv[]) {
 	sumB = 0;
 	done = 0;
 	for(int i = 1; i < n;) {
-		//Erstellung einer baumartigen Abarbeitungsliste
+		//baumartige Erstellung einer Abarbeitungsliste
 		for(int j = 0; j < orderCount[done]; j++) {
 			ordered[i] = order[done][j];
 			i++;
@@ -89,7 +72,7 @@ int main(int argc, char * argv[]) {
 				#pragma omp atomic read
 				help = b[a[ordered[i]][0]];
 				double start = omp_get_wtime();
-				while(omp_get_wtime() - start < a[ordered[i]][2]) {} //very complicated calculation
+				while(omp_get_wtime() - start < a[ordered[i]][2]) {}
 				#pragma omp atomic write
 				b[ordered[i]] = help + a[ordered[i]][1];
 				#pragma omp atomic write
